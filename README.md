@@ -32,4 +32,8 @@ perhaps use dynamic protobuf building to design a more dynamic flagging service
 
 
 Commands:
-* protoc --go_out=plugins=grpc:. protos/*.proto
+* install protoc on your machine https://grpc.io/docs/protoc-installation/
+* go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+* go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+* protoc --go-grpc_out=. --go_out=. protos/*.proto
+* export $(grep -v '^#' local.env | xargs -0) && go run .

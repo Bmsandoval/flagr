@@ -1,50 +1,83 @@
 package configs
 
 import (
-	"encoding/json"
+	"fmt"
 	"github.com/spf13/viper"
-	"io/ioutil"
+	"github.com/ztrue/tracerr"
+	"log"
+	"reflect"
 )
 
 type Secrets struct {
-	DatabaseSecrets
+	DbUser    string `mapstructure:"dbUser"`
+	DbPass    string `mapstructure:"dbPass"`
+	SrvJwtKey string `mapstructure:"serverJwtKey"`
 }
 
-func Configure() (*Configuration, error) {
-	viperConfig := viper.GetViper()
-	viperConfig.AutomaticEnv()
-
-	config := Configuration{}
-	config.GetConfiguration(*viperConfig)
-	if err := config.GetSecrets(); err != nil {
-		return nil, err
-	}
-	return &config, nil
-}
-
-type Configuration struct {
-	ServerConfiguration
-	DatabaseConfiguration
+type Env struct {
+	DbMigrationLocation string `env:"FLAGR_MIGRATION_LOCATION"`
+	DbSchema            string `env:"FLAGR_DB_SCHEMA"`
+	DbHost              string `env:"FLAGR_DB_HOST"`
+	DbPort              string `env:"FLAGR_DB_PORT"`
+	SrvPort             string `env:"FLAGR_SERVER_PORT"`
+	SrvSecretsFile      string `env:"FLAGR_SECRETS_FILE"`
 	Secrets
 }
 
-func (c *Configuration) GetConfiguration(v viper.Viper) {
-	c.DatabaseConfiguration = GetDatabaseConfig(v)
-	c.ServerConfiguration = GetServerConfig(v)
+func Configure() (*Env, error) {
+	vipe := viper.GetViper()
+
+	env := Env{}
+	if err := env.RegisterEnvironmentVariables(vipe); err != nil {
+		return nil, tracerr.Wrap(err)
+	}
+	if err := env.LoadSecretsFile(vipe); err != nil {
+		return nil, tracerr.Wrap(err)
+	}
+	return &env, nil
 }
 
-func (c *Configuration) GetSecrets() error {
-	var secretsMap Secrets
+func (env *Env) RegisterEnvironmentVariables(vipe *viper.Viper) error {
+	vipe.AutomaticEnv()
 
-	secrets, err := ioutil.ReadFile(c.SrvSecretsFile)
+	//var newEnvConfiguration Env
+	t := reflect.TypeOf(*env)
+
+	for i := 0; i < t.NumField(); i++ {
+		// Get the field, returns https://golang.org/pkg/reflect/#StructField
+		field := t.Field(i)
+
+		if field.Name == "Secrets" {
+			continue
+		}
+
+		// Get the field tag value
+		tag := field.Tag.Get("env")
+
+		if tag == "" {
+			continue
+		}
+		v := reflect.ValueOf(env).Elem().FieldByName(field.Name)
+		if v.IsValid() {
+			tagValue := vipe.GetString(tag)
+			v.Set(reflect.ValueOf(tagValue))
+		}
+	}
+	return nil
+}
+
+func (env *Env) LoadSecretsFile(vipe *viper.Viper) error {
+	vipe.SetConfigFile(env.SrvSecretsFile)
+
+	err := vipe.ReadInConfig()
 	if err != nil {
-		return err
+		log.Fatal("Can't find the file .env : ", err)
 	}
-
-	if err := json.Unmarshal(secrets, &secretsMap); err != nil {
-		return err
+	err = vipe.Unmarshal(&env.Secrets)
+	if err != nil {
+		log.Fatal("Environment can't be loaded: ", err)
 	}
+	fmt.Printf("%+v", env)
 
-	c.Secrets = secretsMap
 	return nil
 }

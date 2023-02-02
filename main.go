@@ -4,6 +4,7 @@ import (
 	"github.com/bmsandoval/flagr/internal/Entry"
 
 	// Import Handlers
+	_ "github.com/bmsandoval/flagr/internal/Transports/GrpcHandlers/ReleaseFlagServer"
 
 	"math/rand"
 	"time"

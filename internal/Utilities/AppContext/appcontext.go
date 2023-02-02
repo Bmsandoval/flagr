@@ -9,7 +9,7 @@ import (
 
 type Context struct {
 	DB        DbContext.Connection
-	Config    configs.Configuration
+	Config    configs.Env
 	GoContext context.Context
 	Logger    sugar.Logger
 }

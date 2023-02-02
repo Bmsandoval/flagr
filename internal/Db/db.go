@@ -7,6 +7,7 @@ import (
 	"github.com/bmsandoval/flagr/pkg/DbContext"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/pressly/goose"
+	"github.com/ztrue/tracerr"
 )
 
 var DB *sql.DB
@@ -42,11 +43,11 @@ func open(ctx AppContext.Context) error {
 
 	DB, err = sql.Open("mysql", connectionString)
 	if err != nil {
-		return err
+		return tracerr.Wrap(err)
 	}
 
 	if err := ping(); err != nil {
-		return err
+		return tracerr.Wrap(err)
 	}
 
 	return nil
@@ -58,10 +59,10 @@ func ping() error {
 
 func migrate(ctx AppContext.Context) error {
 	if err := goose.SetDialect("mysql"); err != nil {
-		return err
+		return tracerr.Wrap(err)
 	}
 	if err := goose.Up(DB, ctx.Config.DbMigrationLocation); err != nil {
-		return err
+		return tracerr.Wrap(err)
 	}
 	return nil
 }

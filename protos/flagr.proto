@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./pbs";
+
+package pbs;
+
+service ReleaseFlagSrv {
+  rpc CreateReleaseFlag (CreateReleaseFlagRequest) returns (CreateReleaseFlagResponse) {}
+}
+
+message CreateReleaseFlagRequest {
+  string label = 1;
+  string description = 2;
+  bool status = 3;
+  google.protobuf.Timestamp start_at = 4;
+}
+
+message CreateReleaseFlagResponse {
+  string label = 1;
+  string description = 2;
+  bool status = 3;
+  google.protobuf.Timestamp start_at = 4;
+}
+//message CreateReleaseFlagResponse {
+//  ReleaseFlag flag = 1;
+//}
+
+//message ReleaseFlag {
+//  uint32 id = 1;
+//  string sub = 2;
+//  string label = 3;
+//  string description = 4;
+//  bool status = 5;
+//  google.protobuf.Timestamp start_at = 6;
+//  google.protobuf.Timestamp created_at = 7;
+//  google.protobuf.Timestamp updated_at = 8;
+//  google.protobuf.Timestamp deleted_at = 9;
+//}
