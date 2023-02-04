@@ -11,15 +11,15 @@ import (
 
 func MakeCreateExampleEndpoint(appCtx AppContext.Context, services Services.Bundle) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		in := request.(*pbs.CreateReleaseFlagRequest)
+		in := request.(*pbs.CreateExampleRequest)
 
 		id, err := services.ExampleSvc.InsertExample(in.Label)
 		if err != nil {
 			tracerr.Print(err)
-			return &pbs.CreateReleaseFlagResponse{}, nil
+			return &pbs.CreateExampleResponse{}, nil
 		}
 		_ = id
 
-		return &pbs.CreateReleaseFlagResponse{}, nil
+		return &pbs.CreateExampleResponse{}, nil
 	}
 }

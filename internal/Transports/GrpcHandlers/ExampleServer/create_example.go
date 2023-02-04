@@ -6,7 +6,7 @@ import (
 	"github.com/bmsandoval/flagr/pbs"
 )
 
-func (s *Server) CreateReleaseFlag(ctx context.Context, in *pbs.CreateReleaseFlagRequest) (*pbs.CreateReleaseFlagResponse, error) {
+func (s *Server) CreateExample(ctx context.Context, in *pbs.CreateExampleRequest) (*pbs.CreateExampleResponse, error) {
 	endpoint := ExampleEndpoints.MakeCreateExampleEndpoint(s.appCtx, s.services)
 
 	response, err := endpoint(ctx, in)
@@ -19,5 +19,5 @@ func (s *Server) CreateReleaseFlag(ctx context.Context, in *pbs.CreateReleaseFla
 		return nil, nil
 	}
 
-	return response.(*pbs.CreateReleaseFlagResponse), nil
+	return response.(*pbs.CreateExampleResponse), nil
 }
