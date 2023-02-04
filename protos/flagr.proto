@@ -6,28 +6,28 @@ option go_package = "./pbs";
 
 package pbs;
 
-service Example {
-  rpc CreateExample (CreateExampleRequest) returns (CreateExampleResponse) {}
+service ReleaseFlag {
+  rpc CreateReleaseFlag (CreateReleaseFlagRequest) returns (CreateReleaseFlagResponse) {}
 }
 
-message CreateExampleRequest {
+message CreateReleaseFlagRequest {
   string label = 1;
   string description = 2;
   bool status = 3;
   google.protobuf.Timestamp start_at = 4;
 }
 
-message CreateExampleResponse {
+message CreateReleaseFlagResponse {
   string label = 1;
   string description = 2;
   bool status = 3;
   google.protobuf.Timestamp start_at = 4;
 }
-//message CreateExampleResponse {
-//  Example example = 1;
+//message CreateReleaseFlagResponse {
+//  ReleaseFlag flag = 1;
 //}
 
-//message Example {
+//message ReleaseFlag {
 //  uint32 id = 1;
 //  string sub = 2;
 //  string label = 3;

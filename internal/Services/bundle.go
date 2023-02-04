@@ -1,17 +1,17 @@
 package Services
 
 import (
-	"github.com/bmsandoval/flagr/internal/Services/ExampleService"
+	"github.com/bmsandoval/flagr/internal/Services/ReleaseFlagService"
 	"github.com/bmsandoval/flagr/internal/Utilities/AppContext"
 	"reflect"
 )
 
 type Bundle struct {
-	ExampleSvc ExampleService.IExampleSvc
+	ReleaseFlagSvc ReleaseFlagService.IReleaseFlagSvc
 }
 
 var bundlableServices = []IBundlable{
-	ExampleService.Bundlable{},
+	ReleaseFlagService.Bundlable{},
 }
 
 type IBundlable interface {

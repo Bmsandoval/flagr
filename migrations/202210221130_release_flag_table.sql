@@ -1,5 +1,5 @@
 -- +goose Up
-CREATE TABLE IF NOT EXISTS `example` (
+CREATE TABLE IF NOT EXISTS `release_flag` (
     id binary(16) PRIMARY KEY,
     sub varchar(36) generated always as (
         insert(
@@ -19,4 +19,4 @@ CREATE TABLE IF NOT EXISTS `example` (
     deleted_at  TIMESTAMP
     );
 -- +goose Down
-DROP TABLE IF EXISTS `example`
+DROP TABLE IF EXISTS `release_flag`

@@ -1,4 +1,4 @@
-package ExampleService
+package ReleaseFlagService
 
 import (
 	"github.com/go-sql-driver/mysql"
@@ -6,17 +6,17 @@ import (
 	"github.com/ztrue/tracerr"
 )
 
-var InsertExampleSql = `
-INSERT INTO example(id,label)
-VALUES ( UNHEX( REPLACE( ?,'-','' )), ?);
+var InsertReleaseFlagSql = `
+INSERT INTO release_flag(id,label)
+VALUES ( UNHEX(REPLACE( ?,'-','' )), ?);
 `
 
-func (h *ExampleSvc) InsertExample(label string) (string, error) {
+func (h *ReleaseFlagSvc) InsertReleaseFlag(label string) (string, error) {
 	for {
 		// loop in case uid collision
 		uid := uuid.New()
 
-		statement, err := h.AppCtx.DB.Prepare(InsertExampleSql)
+		statement, err := h.AppCtx.DB.Prepare(InsertReleaseFlagSql)
 		if err != nil {
 			return "", tracerr.Wrap(err)
 		}

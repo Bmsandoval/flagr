@@ -1,4 +1,4 @@
-package ExampleService
+package ReleaseFlagService
 
 // NOTE : Filename 'abditory' chosen to keep this file at the top of the list
 
@@ -11,20 +11,20 @@ type Bundlable struct{}
 
 // Create is a copy-pasta property
 func (h Bundlable) Create(appCtx AppContext.Context) interface{} {
-	return &ExampleSvc{
+	return &ReleaseFlagSvc{
 		AppCtx: appCtx,
 	}
 }
 
 // Name Return the name of the service as it is defined in Services.Bundle
 func (h Bundlable) Name() string {
-	return "ExampleSvc"
+	return "ReleaseFlagSvc"
 }
 
-// ExampleSvc adheres to IExampleSvc
-type ExampleSvc struct {
+// ReleaseFlagSvc adheres to IReleaseFlagSvc
+type ReleaseFlagSvc struct {
 	AppCtx AppContext.Context
 }
-type IExampleSvc interface {
-	InsertExample(label string) (string, error)
+type IReleaseFlagSvc interface {
+	InsertReleaseFlag(label string) (string, error)
 }

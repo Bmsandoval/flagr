@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type Example struct {
+type ReleaseFlag struct {
 	Id        []uint8    `db:"id" json:"id"`
 	Sub       string     `db:"sub" json:"sub"`
 	Label     string     `db:"label" json:"label"`

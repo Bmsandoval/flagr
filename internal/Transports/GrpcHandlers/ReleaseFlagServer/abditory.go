@@ -11,7 +11,7 @@ import (
 func init() {
 	GrpcHandlers.RegisterGrpcHandler(
 		func(s *grpc.Server, ctx AppContext.Context, svcBundle Services.Bundle) {
-			pbs.RegisterExampleServer(s,
+			pbs.RegisterReleaseFlagServer(s,
 				&Server{
 					appCtx: ctx, services: svcBundle,
 				})
@@ -21,5 +21,5 @@ func init() {
 type Server struct {
 	appCtx   AppContext.Context
 	services Services.Bundle
-	pbs.UnimplementedExampleServer
+	pbs.UnimplementedReleaseFlagServer
 }

@@ -18,86 +18,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// ExampleClient is the client API for Example service.
+// ReleaseFlagClient is the client API for ReleaseFlag service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ExampleClient interface {
-	CreateExample(ctx context.Context, in *CreateExampleRequest, opts ...grpc.CallOption) (*CreateExampleResponse, error)
+type ReleaseFlagClient interface {
+	CreateReleaseFlag(ctx context.Context, in *CreateReleaseFlagRequest, opts ...grpc.CallOption) (*CreateReleaseFlagResponse, error)
 }
 
-type exampleClient struct {
+type releaseFlagClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewExampleClient(cc grpc.ClientConnInterface) ExampleClient {
-	return &exampleClient{cc}
+func NewReleaseFlagClient(cc grpc.ClientConnInterface) ReleaseFlagClient {
+	return &releaseFlagClient{cc}
 }
 
-func (c *exampleClient) CreateExample(ctx context.Context, in *CreateExampleRequest, opts ...grpc.CallOption) (*CreateExampleResponse, error) {
-	out := new(CreateExampleResponse)
-	err := c.cc.Invoke(ctx, "/pbs.Example/CreateExample", in, out, opts...)
+func (c *releaseFlagClient) CreateReleaseFlag(ctx context.Context, in *CreateReleaseFlagRequest, opts ...grpc.CallOption) (*CreateReleaseFlagResponse, error) {
+	out := new(CreateReleaseFlagResponse)
+	err := c.cc.Invoke(ctx, "/pbs.ReleaseFlag/CreateReleaseFlag", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ExampleServer is the server API for Example service.
-// All implementations must embed UnimplementedExampleServer
+// ReleaseFlagServer is the server API for ReleaseFlag service.
+// All implementations must embed UnimplementedReleaseFlagServer
 // for forward compatibility
-type ExampleServer interface {
-	CreateExample(context.Context, *CreateExampleRequest) (*CreateExampleResponse, error)
-	mustEmbedUnimplementedExampleServer()
+type ReleaseFlagServer interface {
+	CreateReleaseFlag(context.Context, *CreateReleaseFlagRequest) (*CreateReleaseFlagResponse, error)
+	mustEmbedUnimplementedReleaseFlagServer()
 }
 
-// UnimplementedExampleServer must be embedded to have forward compatible implementations.
-type UnimplementedExampleServer struct {
+// UnimplementedReleaseFlagServer must be embedded to have forward compatible implementations.
+type UnimplementedReleaseFlagServer struct {
 }
 
-func (UnimplementedExampleServer) CreateExample(context.Context, *CreateExampleRequest) (*CreateExampleResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateExample not implemented")
+func (UnimplementedReleaseFlagServer) CreateReleaseFlag(context.Context, *CreateReleaseFlagRequest) (*CreateReleaseFlagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateReleaseFlag not implemented")
 }
-func (UnimplementedExampleServer) mustEmbedUnimplementedExampleServer() {}
+func (UnimplementedReleaseFlagServer) mustEmbedUnimplementedReleaseFlagServer() {}
 
-// UnsafeExampleServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ExampleServer will
+// UnsafeReleaseFlagServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ReleaseFlagServer will
 // result in compilation errors.
-type UnsafeExampleServer interface {
-	mustEmbedUnimplementedExampleServer()
+type UnsafeReleaseFlagServer interface {
+	mustEmbedUnimplementedReleaseFlagServer()
 }
 
-func RegisterExampleServer(s grpc.ServiceRegistrar, srv ExampleServer) {
-	s.RegisterService(&Example_ServiceDesc, srv)
+func RegisterReleaseFlagServer(s grpc.ServiceRegistrar, srv ReleaseFlagServer) {
+	s.RegisterService(&ReleaseFlag_ServiceDesc, srv)
 }
 
-func _Example_CreateExample_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateExampleRequest)
+func _ReleaseFlag_CreateReleaseFlag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateReleaseFlagRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExampleServer).CreateExample(ctx, in)
+		return srv.(ReleaseFlagServer).CreateReleaseFlag(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pbs.Example/CreateExample",
+		FullMethod: "/pbs.ReleaseFlag/CreateReleaseFlag",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleServer).CreateExample(ctx, req.(*CreateExampleRequest))
+		return srv.(ReleaseFlagServer).CreateReleaseFlag(ctx, req.(*CreateReleaseFlagRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Example_ServiceDesc is the grpc.ServiceDesc for Example service.
+// ReleaseFlag_ServiceDesc is the grpc.ServiceDesc for ReleaseFlag service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Example_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "pbs.Example",
-	HandlerType: (*ExampleServer)(nil),
+var ReleaseFlag_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pbs.ReleaseFlag",
+	HandlerType: (*ReleaseFlagServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateExample",
-			Handler:    _Example_CreateExample_Handler,
+			MethodName: "CreateReleaseFlag",
+			Handler:    _ReleaseFlag_CreateReleaseFlag_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

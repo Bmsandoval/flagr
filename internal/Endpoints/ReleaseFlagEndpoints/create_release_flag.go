@@ -1,4 +1,4 @@
-package ExampleEndpoints
+package ReleaseFlagEndpoints
 
 import (
 	"context"
@@ -9,17 +9,17 @@ import (
 	"github.com/ztrue/tracerr"
 )
 
-func MakeCreateExampleEndpoint(appCtx AppContext.Context, services Services.Bundle) endpoint.Endpoint {
+func MakeCreateReleaseFlagEndpoint(appCtx AppContext.Context, services Services.Bundle) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		in := request.(*pbs.CreateExampleRequest)
+		in := request.(*pbs.CreateReleaseFlagRequest)
 
-		id, err := services.ExampleSvc.InsertExample(in.Label)
+		id, err := services.ReleaseFlagSvc.InsertReleaseFlag(in.Label)
 		if err != nil {
 			tracerr.Print(err)
-			return &pbs.CreateExampleResponse{}, nil
+			return &pbs.CreateReleaseFlagResponse{}, nil
 		}
 		_ = id
 
-		return &pbs.CreateExampleResponse{}, nil
+		return &pbs.CreateReleaseFlagResponse{}, nil
 	}
 }
