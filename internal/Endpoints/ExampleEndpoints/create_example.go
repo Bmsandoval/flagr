@@ -6,6 +6,7 @@ import (
 	"github.com/bmsandoval/flagr/internal/Utilities/AppContext"
 	"github.com/bmsandoval/flagr/pbs"
 	"github.com/go-kit/kit/endpoint"
+	"github.com/ztrue/tracerr"
 )
 
 func MakeCreateExampleEndpoint(appCtx AppContext.Context, services Services.Bundle) endpoint.Endpoint {
@@ -14,7 +15,7 @@ func MakeCreateExampleEndpoint(appCtx AppContext.Context, services Services.Bund
 
 		id, err := services.ExampleSvc.InsertExample(in.Label)
 		if err != nil {
-			appCtx.Logger.Error(err)
+			tracerr.Print(err)
 			return &pbs.CreateReleaseFlagResponse{}, nil
 		}
 		_ = id

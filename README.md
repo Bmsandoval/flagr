@@ -37,3 +37,4 @@ Commands:
 * go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 * protoc --go-grpc_out=. --go_out=. protos/*.proto
 * export $(grep -v '^#' local.env | xargs -0) && go run .
+* grpcui -plaintext -import-path ~/projects/golang/flagr/protos/ --proto ~/projects/golang/flagr/protos/* localhost:8080

@@ -1,0 +1,7 @@
+vendor/
+# blacklist configs
+*.env
+*.secrets.json
+# whitelist examples
+!ex.env
+!ex.secrets.json
